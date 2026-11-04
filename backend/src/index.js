@@ -1,9 +1,11 @@
 import { createApp } from './app.js';
 import { env, assertProductionSecrets } from './config/env.js';
+import { getDb } from './db/context.js';
 import { startClosingRunner } from './jobs/closingRunner.js';
 
 async function main() {
   assertProductionSecrets();
+  await getDb();
   const app = createApp();
   const server = app.listen(env.port, () => {
     console.log(`[auction-platform] listening on :${env.port} (${env.nodeEnv})`);
