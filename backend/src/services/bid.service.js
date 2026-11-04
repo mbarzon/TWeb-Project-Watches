@@ -2,7 +2,7 @@ import { publish } from '../realtime/eventBus.js';
 import { getDb } from '../db/context.js';
 import { ApiError } from '../utils/appError.js';
 import { toCents, fromCents } from '../utils/money.js';
-import { bidMutex } from '../utils/mutex.js';
+import { dbWriteMutex, DB_WRITE_KEY } from '../utils/mutex.js';
 import { Transaction } from 'sequelize';
 import { minimumBidCentsFor } from './auction.service.js';
 import { AUCTION_STATUSES as S } from '../models/index.js';
@@ -30,7 +30,7 @@ export async function placeBid(auctionId, { actorUser, amount }) {
 
   // Per-auction cooperative lock: one writer transaction per auction at a
   // time (SQLite is single-writer; see ADR con-transactions.md).
-  const result = await bidMutex.runExclusive(`auction:${auctionId}`, () =>
+  const result = await dbWriteMutex.runExclusive(DB_WRITE_KEY, () =>
     models.Auction.sequelize.transaction({ type: Transaction.TYPES.IMMEDIATE }, async (tx) => {
       const auction = await models.Auction.findByPk(auctionId, { transaction: tx });
       if (!auction) throw ApiError.notFound();

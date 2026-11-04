@@ -1,0 +1,1 @@
+time="2026-11-04T16:36:19+02:00" level=error msg="TypeError: Value is not a constructor\n\tat file:///home/andreipirone/Documents/tehnologii-web-proj/backend/load/mixed-workload.js:12:22(36)\n" hint="script exception" source=stacktrace

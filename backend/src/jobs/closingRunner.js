@@ -2,7 +2,7 @@ import { env } from '../config/env.js';
 import { getDb } from '../db/context.js';
 import { Op } from 'sequelize';
 import { publish, CHANNELS } from '../realtime/eventBus.js';
-import { bidMutex } from '../utils/mutex.js';
+import { dbWriteMutex, DB_WRITE_KEY } from '../utils/mutex.js';
 import { assertTransition } from '../services/auctionStateMachine.js';
 import { AUCTION_STATUSES as S } from '../models/index.js';
 
@@ -67,7 +67,7 @@ export async function closeDueAuctions({ now = new Date() } = {}) {
 export async function closeAuction(auctionId, { now = new Date(), adminUser = null } = {}) {
   const { models } = await getDb();
 
-  return bidMutex
+  return dbWriteMutex
     .runExclusive(`auction:${auctionId}`, () =>
       models.Auction.sequelize.transaction({ type: 'IMMEDIATE' }, async (tx) => {
         const auction = await models.Auction.findByPk(auctionId, { transaction: tx });

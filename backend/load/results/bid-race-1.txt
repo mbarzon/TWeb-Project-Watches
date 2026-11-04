@@ -1,0 +1,96 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: load/bid-race.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 20 max VUs, 42s max duration (incl. graceful stop):
+              * default: 20 looping VUs for 12s (gracefulStop: 30s)
+
+
+running (01.0s), 20/20 VUs, 57 complete and 0 interrupted iterations
+default   [   8% ] 20 VUs  01.0s/12s
+
+running (02.0s), 20/20 VUs, 115 complete and 0 interrupted iterations
+default   [  17% ] 20 VUs  02.0s/12s
+
+running (03.0s), 20/20 VUs, 173 complete and 0 interrupted iterations
+default   [  25% ] 20 VUs  03.0s/12s
+
+running (04.0s), 20/20 VUs, 250 complete and 0 interrupted iterations
+default   [  33% ] 20 VUs  04.0s/12s
+
+running (05.0s), 20/20 VUs, 308 complete and 0 interrupted iterations
+default   [  42% ] 20 VUs  05.0s/12s
+
+running (06.0s), 20/20 VUs, 365 complete and 0 interrupted iterations
+default   [  50% ] 20 VUs  06.0s/12s
+
+running (07.0s), 20/20 VUs, 442 complete and 0 interrupted iterations
+default   [  58% ] 20 VUs  07.0s/12s
+
+running (08.0s), 20/20 VUs, 500 complete and 0 interrupted iterations
+default   [  67% ] 20 VUs  08.0s/12s
+
+running (09.0s), 20/20 VUs, 558 complete and 0 interrupted iterations
+default   [  75% ] 20 VUs  09.0s/12s
+
+running (10.0s), 20/20 VUs, 635 complete and 0 interrupted iterations
+default   [  83% ] 20 VUs  10.0s/12s
+
+running (11.0s), 20/20 VUs, 693 complete and 0 interrupted iterations
+default   [  92% ] 20 VUs  11.0s/12s
+
+running (12.0s), 20/20 VUs, 750 complete and 0 interrupted iterations
+default   [ 100% ] 20 VUs  12.0s/12s
+time="2026-11-04T16:40:17+02:00" level=info msg="[bid-race] auction 10 persisted history: 1969 bids" source=console
+
+
+  █ THRESHOLDS 
+
+    race_violations
+    ✓ 'count==0' count=0
+
+    server_errors_5xx
+    ✓ 'count==0' count=0
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 10      0.830306/s
+    checks_succeeded...: 100.00% 10 out of 10
+    checks_failed......: 0.00%   0 out of 10
+
+    ✓ accepted or low
+
+    CUSTOM
+    race_violations................: 0      0/s
+    server_errors_5xx..............: 0      0/s
+
+    HTTP
+    http_req_duration..............: avg=31.77ms  min=2.99ms   med=10.23ms  max=87.33ms p(90)=86.22ms  p(95)=87.1ms  
+      { expected_response:true }...: avg=31.77ms  min=2.99ms   med=10.23ms  max=87.33ms p(90)=86.22ms  p(95)=87.1ms  
+    http_req_failed................: 0.00%  0 out of 32
+    http_reqs......................: 32     2.656978/s
+
+    EXECUTION
+    iteration_duration.............: avg=312.36ms min=300.02ms med=300.64ms max=1.2s    p(90)=301.16ms p(95)=301.32ms
+    iterations.....................: 770    63.933537/s
+    vus............................: 20     min=20      max=20
+    vus_max........................: 20     min=20      max=20
+
+    NETWORK
+    data_received..................: 29 kB  2.4 kB/s
+    data_sent......................: 6.5 kB 538 B/s
+
+
+
+
+running (12.0s), 00/20 VUs, 770 complete and 0 interrupted iterations
+default ✓ [ 100% ] 20 VUs  12s

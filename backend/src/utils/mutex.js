@@ -1,12 +1,13 @@
 /**
  * Keyed async mutex (cooperative, in-process).
  *
- * Used to serialize per-auction DB writes. SQLite is single-writer at the
- * database level, so allowing many simultaneous BEGIN IMMEDIATE transactions
- * against one auction only generates SQLITE_BUSY storms (Sequelize opens a
- * fresh connection per transaction and its busy/retry handling degrades under
- * contention). The DB-level BEGIN IMMEDIATE + UNIQUE(auctionId, amountCents)
- * index remain the authoritative invariant backstop.
+ * Used to serialize DB write transactions. SQLite is single-writer at the
+ * FILE level: concurrent BEGIN IMMEDIATE transactions (even on different
+ * auctions) contend on the write lock, generating SQLITE_BUSY storms under
+ * load because Sequelize opens a fresh connection per transaction. A global
+ * write queue matches the engine's concurrency model exactly, keeps every
+ * invariant enforced inside the transaction, and cross-auction fairness is
+ * FIFO by arrival. (Bounded busy_timeout remains as a backstop.)
  */
 export class KeyedMutex {
   #chains = new Map();
@@ -32,4 +33,5 @@ export class KeyedMutex {
   }
 }
 
-export const bidMutex = new KeyedMutex();
+export const dbWriteMutex = new KeyedMutex();
+export const DB_WRITE_KEY = 'db:write';
