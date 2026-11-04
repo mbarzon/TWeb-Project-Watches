@@ -6,11 +6,13 @@ import { startClosingRunner } from './jobs/closingRunner.js';
 async function main() {
   assertProductionSecrets();
   await getDb();
+  const closingRunner = startClosingRunner();
   const app = createApp();
   const server = app.listen(env.port, () => {
     console.log(`[auction-platform] listening on :${env.port} (${env.nodeEnv})`);
   });
   server.on('close', () => {
+    closingRunner.stop();
     console.log('[auction-platform] server closed');
   });
   process.on('SIGINT', () => server.close());
