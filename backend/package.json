@@ -14,7 +14,7 @@
     "seed": "node scripts/seed.js",
     "test": "node --test --test-concurrency=1",
     "test:watch": "node --watch --test",
-    "coverage": "c8 --all --include 'src/**' npm test"
+    "coverage": "c8 --all --include 'src/**' --exclude 'src/index.js' --reporter=text --reporter=html npm test"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

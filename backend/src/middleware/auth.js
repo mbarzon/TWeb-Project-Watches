@@ -21,20 +21,6 @@ export async function requireAuth(req, _res, next) {
   }
 }
 
-/** Authentication is attempted if a token is present, but optional. */
-export async function optionalAuth(req, _res, next) {
-  try {
-    const token = extractBearerToken(req);
-    if (token) {
-      const payload = await verifyToken(token);
-      if (payload?.sub) req.user = await getUserById(payload.sub);
-    }
-    next();
-  } catch (err) {
-    next(err);
-  }
-}
-
 export function requireRole(...roles) {
   return (req, _res, next) => {
     if (!req.user) return next(ApiError.unauthorized());

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { requireAuth, requireRole } from '../middleware/auth.js';
+import { requireAuth } from '../middleware/auth.js';
 import { validateBody, validateQuery } from '../utils/validators.js';
 import { AUCTION_STATUSES } from '../models/index.js';
 import {
