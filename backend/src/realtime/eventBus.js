@@ -20,10 +20,10 @@ let monotonic = 0;
 export function publish(channel, event) {
   const envelope = {
     ...event,
+    channel, // specific channel this event was published to
     busSeq: ++monotonic, // hub-local counter for SSE Last-Event-ID bookkeeping
     timestamp: new Date().toISOString()
   };
-  bus.emit(channel, envelope);
   bus.emit(CHANNELS.global, envelope);
   return envelope;
 }
@@ -31,4 +31,8 @@ export function publish(channel, event) {
 export function subscribe(channel, listener) {
   bus.on(channel, listener);
   return () => bus.off(channel, listener);
+}
+
+export function unsubscribe(channel, listener) {
+  bus.off(channel, listener);
 }
