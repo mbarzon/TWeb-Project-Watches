@@ -4,6 +4,7 @@ import authRouter from './routes/auth.routes.js';
 import itemRouter from './routes/item.routes.js';
 import auctionRouter from './routes/auction.routes.js';
 import bidRouter from './routes/bid.routes.js';
+import fxRouter from './routes/fx.routes.js';
 import realtimeRouter from './routes/realtime.routes.js';
 
 export function createApp() {
@@ -17,6 +18,7 @@ export function createApp() {
   app.use('/api/items', itemRouter);
   app.use('/api/auctions', auctionRouter);
   app.use('/api/auctions', bidRouter);
+  app.use('/api/auctions', fxRouter);
   app.use('/api', realtimeRouter);
 
   app.use(notFoundHandler);
